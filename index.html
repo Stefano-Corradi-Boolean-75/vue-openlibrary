@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.css' integrity='sha512-+QrNe4Kul4TNKwDK+EJM71C9z5I9I/iYLEIJPYTfmXouMSU8tkayWYnOsAKjDAaOOH21+MS747IPTYcD+2euuQ==' crossorigin='anonymous'/>
+
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+  <style>
+    .lds-hourglass {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .lds-hourglass:after {
+      content: " ";
+      display: block;
+      border-radius: 50%;
+      width: 0;
+      height: 0;
+      margin: 8px;
+      box-sizing: border-box;
+      border: 32px solid #fcf;
+      border-color: #fcf transparent #fcf transparent;
+      animation: lds-hourglass 1.2s infinite;
+    }
+    @keyframes lds-hourglass {
+      0% {
+        transform: rotate(0);
+        animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      }
+      50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+      100% {
+        transform: rotate(1800deg);
+      }
+    }
+    
+  </style>
+  
+
+
+  <!-- VueJs -->
+  <script src="https://unpkg.com/vue@3"></script>
+  <title>Open library</title>
+</head>
+<body>
+  
+  <div id="app" class="container p-5">
+    <h1>{{title}}</h1>
+    <div>
+      <div class="row">
+        <div class="col">
+          <input class="form-control" type="text" v-model.trim="autore">
+        </div>
+        <div class="col">
+          <button @click="getApi()" class="btn btn-info">Cerca</button>
+        </div>
+      </div>
+
+      <table v-if="isLoaded" class="table my-5">
+        <thead>
+          <tr>
+            <th scope="col">#Index</th>
+            <th scope="col">Titolo</th>
+            <th scope="col">Autore</th>
+            <th scope="col">Data Pubblicazione</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(libro, index) in libri">
+            <th scope="row">{{index + 1 }}</th>
+            <td>{{libro.title}}</td>
+            <td>
+              <ul>
+                <li v-for="autore in libro.author_name">{{autore}}</li>
+              </ul>
+            </td>
+            <td>{{libro.first_publish_year}}</td>
+          </tr>
+         
+        </tbody>
+      </table>
+      
+      <div v-else>
+        <div class="lds-hourglass"></div>
+      </div>
+
+
+      
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
